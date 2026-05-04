@@ -11,6 +11,7 @@ public class Ride {
     private int seatsTotal;
     private int seatsAvailable;
     private double totalFare;
+    private double wallet;  // passenger wallet balance
 
     public Long getRideId() { return rideId; }
     public void setRideId(Long rideId) { this.rideId = rideId; }
@@ -32,4 +33,6 @@ public class Ride {
     public void setSeatsAvailable(int seatsAvailable) { this.seatsAvailable = seatsAvailable; }
     public double getTotalFare() { return totalFare; }
     public void setTotalFare(double totalFare) { this.totalFare = totalFare; }
+    public double getWallet() { return wallet; }
+    public void setWallet(double wallet) { this.wallet = wallet; }
 }

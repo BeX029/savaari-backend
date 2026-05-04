@@ -3,9 +3,7 @@ package com.savaari.backend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
-
 import com.savaari.backend.model.Ride;
-
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,27 +20,21 @@ public class RideController {
 
     @PostMapping("/solo")
     public Ride bookRide(@RequestBody Ride ride) {
-
         int fare = 0;
-
-        if (ride.vehicleType.equalsIgnoreCase("Bike")) {
+        if (ride.getVehicleType().equalsIgnoreCase("Bike")) {
             fare = 50;
-        } else if (ride.vehicleType.equalsIgnoreCase("Car")) {
+        } else if (ride.getVehicleType().equalsIgnoreCase("Car")) {
             fare = 100;
         }
-
-        ride.rideId = idCounter++;
-        ride.fare = fare;
-
-        if (ride.wallet >= fare) {
-            ride.wallet = ride.wallet - fare;
-            ride.status = "Booked";
+        ride.setRideId((long) idCounter++);
+        ride.setTotalFare(fare);
+        if (ride.getWallet() >= fare) {
+            ride.setWallet(ride.getWallet() - fare);
+            ride.setStatus("Booked");
         } else {
-            ride.status = "Failed - Insufficient Balance";
+            ride.setStatus("Failed - Insufficient Balance");
         }
-
         rides.add(ride);
-
         return ride;
     }
 
@@ -53,14 +45,12 @@ public class RideController {
 
     @PostMapping("/cancel/{id}")
     public String cancelRide(@PathVariable int id) {
-
         for (Ride r : rides) {
-            if (r.rideId == id) {
-                r.status = "Cancelled";
+            if (r.getRideId() == id) {
+                r.setStatus("Cancelled");
                 return "Ride " + id + " cancelled";
             }
         }
-
         return "Ride not found";
     }
 
